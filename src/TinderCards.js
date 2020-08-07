@@ -5,7 +5,13 @@ import database from './firebase';
 function TinderCards() {
 
     const[people,setPeople]=  useState([
+        {
+          name:'Rosamund Pike',
+          url:
+          "https://www.goldenglobes.com/sites/default/files/styles/og_metatag__600_x_315_/public/people/cover_images/gg_rosamund_pike.jpg?itok=iotgnjIq"
 
+        },
+      
     ]);
     //Piece of code which runs based on conditions
     useEffect(()=>{
