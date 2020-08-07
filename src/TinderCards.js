@@ -1,62 +1,38 @@
-import React,{ useState } from 'react'
+import React,{ useState, useEffect } from 'react'
 import TinderCard from 'react-tinder-card';
 import './TinderCards.css';
+import database from './firebase';
 function TinderCards() {
 
     const[people,setPeople]=  useState([
         {
           name:'Rosamund Pike',
           url:
-          "https://images.freeimages.com/images/large-previews/f2c/effi-1-1366221.jpg"
+          "https://www.goldenglobes.com/sites/default/files/styles/og_metatag__600_x_315_/public/people/cover_images/gg_rosamund_pike.jpg?itok=iotgnjIq"
 
         },
         {
            name:'Rebecca Fergouson',
-           url:'https://drive.google.com/file/d/1wE6w7WVT3FTfVKDiXA2wfn4MucpS9AXq/view?usp=sharing'
+           url:"https://static.independent.co.uk/s3fs-public/thumbnails/image/2017/10/13/13/rebecca-ferguson-0.jpg?w968h681"
         },
-        // {
-        //     name:'Monica Bellucci',
-        //     url:'https://github.com/imshivamdwivedi/React-Trash/blob/master/res/photos/BuzzFeed.jfif'
+        {
+            name:'Monica Bellucci',
+            url:"https://upload.wikimedia.org/wikipedia/commons/thumb/3/31/Monica_Bellucci%2C_Women%27s_World_Awards_2009_b.jpg/1200px-Monica_Bellucci%2C_Women%27s_World_Awards_2009_b.jpg"
 
-        //  },
-        //  {
-        //     name:'olivia brower',
-        //     url:'https://github.com/imshivamdwivedi/React-Trash/blob/master/res/photos/FiveModels%20(%40FiveModels).jfif'
-        //  },
-        //  {
-        //     name:'Gigi Hadid',
-        //     url:'https://github.com/imshivamdwivedi/React-Trash/blob/master/res/photos/Gigi%20Hadid%202016%20-%20Gigi%20Hadid%20-%20Wikipedia.png'
-
-        //  },
-        //  {
-        //     name:'Kriti Sanon',
-        //     url:'https://github.com/imshivamdwivedi/React-Trash/blob/master/res/photos/Kriti%20Sanon%20Latest%20Stills%20From%20Ekta%20Kapoor%20Diwali%20Celebrations%20-%20LinksInd.jfif'
-
-        //  },
-        //  {
-        //     name:'Michelle Monaghan',
-        //     url:'https://github.com/imshivamdwivedi/React-Trash/blob/master/res/photos/Michelle%20Monaghan.jfif'
-
-        //  },
-        //  {
-        //     name:'Neha Sharma',
-        //     url:'https://github.com/imshivamdwivedi/React-Trash/blob/master/res/photos/Neha%20Sharma.jfif'
-        //  },
-        //  {
-        //     name:'Emma Watson',
-        //     url:'https://github.com/imshivamdwivedi/React-Trash/blob/master/res/photos/Only%20Best%20Emma%20Watson%20Photos.jfif'
-
-        //  },
-        //  {
-        //     name:'Rachel Wiesz',
-        //     url:'https://github.com/imshivamdwivedi/React-Trash/blob/master/res/photos/Rachel%20Weisz%20photo%20%23191606%20_%20theplace2_ru.jfif'
-        //  },
-        //  {
-        //     name:'Alexndra',
-        //     url:'https://github.com/imshivamdwivedi/React-Trash/blob/master/res/photos/%D8%A7%D9%84%D8%B9%D8%B4%D9%82%20%D8%A7%D9%84%D9%85%D9%85%D9%86%D9%88%D8%B9.jfif'
-        //  },
+         },
 
     ]);
+    //Piece of code which runs based on conditions
+    useEffect(()=>{
+     //this is whre ethe code runs
+      
+     database
+      .collection("people")
+      .onSnapshot((snapshot)=>
+       setPeople(snapshot.docs.map((doc)=>doc.data()))
+       );
+     //this will run ONCE when the components loads, and never again
+    },[people]);
     //normal way
     //const people =[]
     //people/push('shivam','dwivedi')
@@ -66,7 +42,8 @@ function TinderCards() {
     return(
         <div>
          <h1>Tinder Cards</h1>
-         {people.map((person) =>(
+          <div className="TinderCards__cardContainer">
+          {people.map((person) =>(
             <TinderCard
              className="swipe"
              key={person.name}    // Always give keys in React  beacuse  it allows  REACT to effieicent re-render list
@@ -80,7 +57,8 @@ function TinderCards() {
                 
                  </div>
             </TinderCard>
-          ))}
+          ))}     
+          </div>
         </div>
     )
 }
