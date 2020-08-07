@@ -5,34 +5,24 @@ import database from './firebase';
 function TinderCards() {
 
     const[people,setPeople]=  useState([
-        {
-          name:'Rosamund Pike',
-          url:
-          "https://www.goldenglobes.com/sites/default/files/styles/og_metatag__600_x_315_/public/people/cover_images/gg_rosamund_pike.jpg?itok=iotgnjIq"
-
-        },
-        {
-           name:'Rebecca Fergouson',
-           url:"https://static.independent.co.uk/s3fs-public/thumbnails/image/2017/10/13/13/rebecca-ferguson-0.jpg?w968h681"
-        },
-        {
-            name:'Monica Bellucci',
-            url:"https://upload.wikimedia.org/wikipedia/commons/thumb/3/31/Monica_Bellucci%2C_Women%27s_World_Awards_2009_b.jpg/1200px-Monica_Bellucci%2C_Women%27s_World_Awards_2009_b.jpg"
-
-         },
 
     ]);
     //Piece of code which runs based on conditions
     useEffect(()=>{
      //this is whre ethe code runs
       
-     database
+     const unsubscribe=database
       .collection("people")
       .onSnapshot((snapshot)=>
        setPeople(snapshot.docs.map((doc)=>doc.data()))
        );
+
+       return () =>{
+         //this the cleanup...
+         unsubscribe();
+       }
      //this will run ONCE when the components loads, and never again
-    },[people]);
+    },[]);
     //normal way
     //const people =[]
     //people/push('shivam','dwivedi')
