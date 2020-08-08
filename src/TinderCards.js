@@ -37,7 +37,6 @@ function TinderCards() {
     // setPeople([...people,'shivam','dwivedi']);
     return(
         <div>
-         <h1>Tinder Cards</h1>
           <div className="TinderCards__cardContainer">
           {people.map((person) =>(
             <TinderCard
